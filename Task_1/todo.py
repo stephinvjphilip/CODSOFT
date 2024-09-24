@@ -1,8 +1,13 @@
+import json
+import os
+
+tasks_file = 'tasks.json'
+
 if __name__ == "__main__":
     main() 
 def main():
     while True:
-    print("\nTo do List")
+    print("\nTo-do List")
     print("1. Add Task")
     print("2. View Pending Task")
     print("3. View Completed task")
