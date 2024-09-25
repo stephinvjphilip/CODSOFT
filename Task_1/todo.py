@@ -2,33 +2,31 @@ import json
 import os
 
 tasks_file = 'tasks.json'
-
-if __name__ == "__main__":
-    main() 
+ 
 def main():
     while True:
-    print("\nTo-do List")
-    print("1. Add Task")
-    print("2. View Pending Task")
-    print("3. View Completed task")
-    print("4. Delete task")
-    Print("5. Exit")
+     print("\nTo-do List")
+     print("1. Add Task")
+     print("2. View Pending Task")
+     print("3. View Completed task")
+     print("4. Delete task")
+     print("5. Exit")
 
-    choice = input("Choose an option from 1 to 5:")
+     choice = input("Choose an option from 1 to 5:")
 
-    if choice == '1':
+     if choice == '1':
         description = input("Enter the task")
         add_task(description)
-    elif choice == '2':
+     elif choice == '2':
         vp_task()
-    elif choice == '3':
+     elif choice == '3':
         vc_task()
-    elif choice == '4':
+     elif choice == '4':
         index = int(input("Enter the task number to delete:")) - 1
         del_task(index)
-    elif choice == '5':
+     elif choice == '5':
         break
-    else:
+     else:
         print("Invalid Option")
 
 def load_tasks():
@@ -79,3 +77,6 @@ def del_task(index):
         print(f"Task'{removed_task['description']}' deleted")
     else:
         print("Invaild task number")
+
+if __name__ == "__main__":
+    main()
