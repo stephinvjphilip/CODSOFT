@@ -8,8 +8,8 @@ def main():
      print("\nTo-do List")
      print("1. Add Task")
      print("2. View Pending Task")
-     print("3. View Completed task")
-     print("4. Delete task")
+     print("3. View Completed Task")
+     print("4. Delete Task")
      print("5. Exit")
 
      choice = input("Choose an option from 1 to 5:")
