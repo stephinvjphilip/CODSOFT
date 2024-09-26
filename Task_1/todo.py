@@ -12,17 +12,17 @@ def main():
      print("4. Delete Task")
      print("5. Exit")
 
-     choice = input("Choose an option from 1 to 5:")
+     choice = input("Choose an option from 1 to 5: ")
 
      if choice == '1':
-        description = input("Enter the task")
+        description = input("Enter the task: ")
         add_task(description)
      elif choice == '2':
         vp_task()
      elif choice == '3':
         vc_task()
      elif choice == '4':
-        index = int(input("Enter the task number to delete:")) - 1
+        index = int(input("Enter the task number to delete: ")) - 1
         del_task(index)
      elif choice == '5':
         break
