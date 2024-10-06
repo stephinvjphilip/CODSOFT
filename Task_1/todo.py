@@ -16,7 +16,7 @@ def save_tasks(tasks):
         json.dump(tasks, file)
 
 def update_task_list(filtered_tasks=None):
-    task_listbox.delete(0, tk.END)  # Clear the listbox
+    task_listbox.delete(0, tk.END)
     tasks = filtered_tasks if filtered_tasks is not None else load_tasks()
     
     for task in tasks:
@@ -30,7 +30,7 @@ def add_task():
         task = {"description": description, "completed": False}
         tasks.append(task)
         save_tasks(tasks)
-        update_task_list()  # Update the full list
+        update_task_list()
         messagebox.showinfo("Success", "Task added")
     else:
         messagebox.showwarning("Warning", "Please enter a task.")
@@ -38,44 +38,44 @@ def add_task():
 def view_pending_tasks():
     tasks = load_tasks()
     pending_tasks = [task for task in tasks if not task['completed']]
-    update_task_list(pending_tasks)  # Show only pending tasks
+    update_task_list(pending_tasks)
 
 def view_completed_tasks():
     tasks = load_tasks()
     completed_tasks = [task for task in tasks if task['completed']]
-    update_task_list(completed_tasks)  # Show only completed tasks
+    update_task_list(completed_tasks)
 
 def view_all_tasks():
-    update_task_list()  # Show all tasks
+    update_task_list()
 
 def complete_task():
     tasks = load_tasks()
-    selected_indices = task_listbox.curselection()  # Get selected indices
+    selected_indices = task_listbox.curselection()
     
     for index in selected_indices:
         tasks[index]['completed'] = True
     
     save_tasks(tasks)
-    update_task_list()  # Update the full list after marking as completed
+    update_task_list()
     messagebox.showinfo("Success", "Selected tasks marked as completed")
 
 def delete_task():
     tasks = load_tasks()
-    selected_indices = task_listbox.curselection()  # Get selected indices
+    selected_indices = task_listbox.curselection()
     
     if not selected_indices:
         messagebox.showwarning("Warning", "Please select at least one task to delete.")
         return
     
-    # Confirm deletion
+   
     confirm = messagebox.askyesno("Confirm Delete", "Are you sure you want to delete the selected tasks?")
     
     if confirm:
-        for index in sorted(selected_indices, reverse=True):  # Delete from last to first to avoid index shifting
+        for index in sorted(selected_indices, reverse=True):
             removed_task = tasks.pop(index)
         
         save_tasks(tasks)
-        update_task_list()  # Update the full list after deletion
+        update_task_list()
         messagebox.showinfo("Success", f"Deleted {len(selected_indices)} task(s)")
 
 root = tk.Tk()
@@ -125,7 +125,7 @@ view_completed_button.pack(pady=5)
 delete_button = tk.Button(button_frame, text="Delete Task(s)", command=delete_task, bg="#FF0000", fg=button_fg_color, font=("Arial", 10))
 delete_button.pack(pady=5)
 
-update_task_list()  # Load all tasks initially
+update_task_list()
 
 if __name__ == "__main__":
     root.mainloop()
