@@ -81,7 +81,7 @@ def delete_task():
 root = tk.Tk()
 root.title("To-Do List")
 root.geometry("500x600")
-root.configure(bg="#90EE90")
+root.configure(bg="#FAFA33")
 
 titlebar_frame = tk.Frame(root, bg="#4CAF50", height=60)
 titlebar_frame.pack(fill=tk.X)
@@ -101,7 +101,7 @@ scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 task_listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=task_listbox.yview)
 
-button_frame = tk.Frame(root, bg="#90EE90")
+button_frame = tk.Frame(root, bg="#FAFA33")
 button_frame.pack(pady=20)
 
 button_bg_color = "#4CAF50"
