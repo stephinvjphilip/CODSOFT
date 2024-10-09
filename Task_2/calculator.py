@@ -42,7 +42,7 @@ class Calculator:
             self.calculate()
         elif char == 'C':
             self.entry.delete('1.0', tk.END)
-            self.entry.config(fg='white')  # Reset color to white
+            self.entry.config(fg='white')
         else:
             current_text = self.entry.get('1.0', tk.END).strip()
             
@@ -67,11 +67,11 @@ class Calculator:
             result = eval(expression)
             self.entry.delete('1.0', tk.END)
             self.entry.insert(tk.END, str(result))
-            self.entry.config(fg='white')  # Reset color to white after successful calculation
+            self.entry.config(fg='white') 
         except Exception as e:
             self.entry.delete('1.0', tk.END)
             self.entry.insert(tk.END, "Invalid Input")
-            self.entry.config(fg='red')  # Change text color to red for errors
+            self.entry.config(fg='red') 
 
 root = tk.Tk()
 calculator_app = Calculator(root)
