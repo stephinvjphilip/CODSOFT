@@ -1,59 +1,78 @@
 import tkinter as tk
 from tkinter import messagebox
 
-# Function to perform calculation
-def calculate():
-    try:
-        # Get user input
-        num1 = float(entry_num1.get())
-        num2 = float(entry_num2.get())
-        operation = operation_var.get()
+class Calculator:
+    def __init__(self, master):
+        self.master = master
+        master.title("Simple Calculator")
+        master.configure(bg='black')
 
-        # Perform the operation
-        if operation == "Add":
-            result = num1 + num2
-        elif operation == "Subtract":
-            result = num1 - num2
-        elif operation == "Multiply":
-            result = num1 * num2
-        elif operation == "Divide":
-            if num2 == 0:
-                raise ValueError("Cannot divide by zero.")
-            result = num1 / num2
+        self.entry = tk.Text(master, font=("Arial", 24), bd=12, width=20, height=1,
+                             bg='black', fg='white', insertbackground='white')
+        self.entry.grid(row=0, column=0, columnspan=4)
+        self.entry.tag_configure("orange", foreground="orange")
+
+        button_texts = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', 'C', '=', '+'
+        ]
+
+        row_val = 1
+        col_val = 0
+
+        for text in button_texts:
+            button_color = 'orange' if text in '+-*/=' else 'white'
+
+            button = tk.Button(master, text=text, padx=20, pady=20, font=("Arial", 16),
+                               command=lambda t=text: self.on_button_click(t),
+                               bg='gray20', fg=button_color)
+            button.grid(row=row_val, column=col_val)
+
+            col_val += 1
+            if col_val > 3:
+                col_val = 0
+                row_val += 1
+
+        master.bind('<Key>', self.on_key_press)
+
+    def on_button_click(self, char):
+        if char == '=':
+            self.calculate()
+        elif char == 'C':
+            self.entry.delete('1.0', tk.END)
+            self.entry.config(fg='white')  # Reset color to white
         else:
-            raise ValueError("Invalid operation.")
+            current_text = self.entry.get('1.0', tk.END).strip()
+            
+            if char in '+-*/=':
+                self.entry.insert(tk.END, char)
+                self.entry.tag_add("orange", f"1.{len(current_text)}", f"1.{len(current_text) + 1}")
+            else:
+                self.entry.insert(tk.END, char)
 
-        # Display the result
-        messagebox.showinfo("Result", f"The result is: {result}")
+    def on_key_press(self, event):
+        key = event.char
+        if key in '0123456789+-*/':
+            self.on_button_click(key)
+        elif key == '\r':
+            self.calculate()
+        elif key.lower() == 'c':
+            self.on_button_click('C')
 
-    except ValueError as e:
-        messagebox.showerror("Error", str(e))
+    def calculate(self):
+        try:
+            expression = self.entry.get('1.0', tk.END).strip()
+            result = eval(expression)
+            self.entry.delete('1.0', tk.END)
+            self.entry.insert(tk.END, str(result))
+            self.entry.config(fg='white')  # Reset color to white after successful calculation
+        except Exception as e:
+            self.entry.delete('1.0', tk.END)
+            self.entry.insert(tk.END, "Invalid Input")
+            self.entry.config(fg='red')  # Change text color to red for errors
 
-# Create the main window
 root = tk.Tk()
-root.title("Simple Calculator")
-
-# Create input fields and labels
-label_num1 = tk.Label(root, text="Enter first number:")
-label_num1.pack()
-entry_num1 = tk.Entry(root)
-entry_num1.pack()
-
-label_num2 = tk.Label(root, text="Enter second number:")
-label_num2.pack()
-entry_num2 = tk.Entry(root)
-entry_num2.pack()
-
-# Create radio buttons for operations
-operation_var = tk.StringVar(value="Add")
-operations = ["Add", "Subtract", "Multiply", "Divide"]
-for operation in operations:
-    rb = tk.Radiobutton(root, text=operation, variable=operation_var, value=operation)
-    rb.pack(anchor=tk.W)
-
-# Create a button to perform the calculation
-calculate_button = tk.Button(root, text="Calculate", command=calculate)
-calculate_button.pack()
-
-# Run the application
+calculator_app = Calculator(root)
 root.mainloop()
