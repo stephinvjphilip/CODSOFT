@@ -67,7 +67,6 @@ def delete_task():
         messagebox.showwarning("Warning", "Please select at least one task to delete.")
         return
     
-   
     confirm = messagebox.askyesno("Confirm Delete", "Are you sure you want to delete the selected tasks?")
     
     if confirm:
@@ -81,48 +80,48 @@ def delete_task():
 root = tk.Tk()
 root.title("To-Do List")
 root.geometry("500x600")
-root.configure(bg="#FAFA33")
+root.configure(bg="#2E2E2E")  # Dark background
 
-titlebar_frame = tk.Frame(root, bg="#4CAF50", height=60)
+titlebar_frame = tk.Frame(root, bg="#3C3C3C", height=60)
 titlebar_frame.pack(fill=tk.X)
 
-heading = tk.Label(titlebar_frame, text="To-Do List", font="Arial 20 bold", fg="white", bg="#4CAF50")
+heading = tk.Label(titlebar_frame, text="To-Do List", font="Arial 20 bold", fg="white", bg="#3C3C3C")
 heading.pack(pady=10)
 
-frame = tk.Frame(root, bg="#90EE90")
+frame = tk.Frame(root, bg="#3C3C3C")  # Frame background
 frame.pack(pady=(10, 0))
 
-task_listbox = tk.Listbox(frame, width=50, height=10, bg="#ffffff", fg="#000000", font=("Arial", 12), selectmode=tk.MULTIPLE)
+task_listbox = tk.Listbox(frame, width=50, height=10, bg="#444444", fg="white", font=("Arial", 12), selectmode=tk.MULTIPLE)
 task_listbox.pack(side=tk.LEFT)
 
-scrollbar = tk.Scrollbar(frame)
+scrollbar = tk.Scrollbar(frame, bg="#3C3C3C")
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 task_listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=task_listbox.yview)
 
-button_frame = tk.Frame(root, bg="#FAFA33")
+button_frame = tk.Frame(root, bg="#2E2E2E")
 button_frame.pack(pady=20)
 
-button_bg_color = "#4CAF50"
+button_bg_color = "#555555"  # Darker button background
 button_fg_color = "white"
 
-add_button = tk.Button(button_frame, text="Add Task", command=add_task, bg="#0000FF", fg=button_fg_color, font=("Arial", 10))
+add_button = tk.Button(button_frame, text="Add Task", command=add_task, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 add_button.pack(pady=5)
 
-view_all_button = tk.Button(button_frame, text="View All Tasks", command=view_all_tasks, bg="#ADD8E6", fg="white", font=("Arial", 10))
+view_all_button = tk.Button(button_frame, text="View All Tasks", command=view_all_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 view_all_button.pack(pady=5)
 
 complete_button = tk.Button(button_frame, text="Complete Task(s)", command=complete_task, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 complete_button.pack(pady=5)
 
-view_pending_button = tk.Button(button_frame, text="View Pending Tasks", command=view_pending_tasks, bg="#FFA500", fg=button_fg_color, font=("Arial", 10))
+view_pending_button = tk.Button(button_frame, text="View Pending Tasks", command=view_pending_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 view_pending_button.pack(pady=5)
 
 view_completed_button = tk.Button(button_frame, text="View Completed Tasks", command=view_completed_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 view_completed_button.pack(pady=5)
 
-delete_button = tk.Button(button_frame, text="Delete Task(s)", command=delete_task, bg="#FF0000", fg=button_fg_color, font=("Arial", 10))
+delete_button = tk.Button(button_frame, text="Delete Task(s)", command=delete_task, bg="#FF4500", fg=button_fg_color, font=("Arial", 10))
 delete_button.pack(pady=5)
 
 update_task_list()
