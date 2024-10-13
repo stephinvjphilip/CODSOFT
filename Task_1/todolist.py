@@ -112,7 +112,7 @@ add_button.pack(pady=5)
 view_all_button = tk.Button(button_frame, text="View All Tasks", command=view_all_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 view_all_button.pack(pady=5)
 
-complete_button = tk.Button(button_frame, text="Complete Task(s)", command=complete_task, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
+complete_button = tk.Button(button_frame, text="Complete Task", command=complete_task, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 complete_button.pack(pady=5)
 
 view_pending_button = tk.Button(button_frame, text="View Pending Tasks", command=view_pending_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
@@ -121,7 +121,7 @@ view_pending_button.pack(pady=5)
 view_completed_button = tk.Button(button_frame, text="View Completed Tasks", command=view_completed_tasks, bg=button_bg_color, fg=button_fg_color, font=("Arial", 10))
 view_completed_button.pack(pady=5)
 
-delete_button = tk.Button(button_frame, text="Delete Task(s)", command=delete_task, bg="#FF4500", fg=button_fg_color, font=("Arial", 10))
+delete_button = tk.Button(button_frame, text="Delete Task", command=delete_task, bg="#FF4500", fg=button_fg_color, font=("Arial", 10))
 delete_button.pack(pady=5)
 
 update_task_list()
