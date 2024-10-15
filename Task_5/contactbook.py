@@ -82,18 +82,28 @@ class ContactBook(QMainWindow):
         self.load_contacts()
 
     def connect_to_db(self):
-        db_path = 'contacts.db' 
+        db_path = 'contacts.db'
         db = QSqlDatabase.addDatabase('QSQLITE')
         db.setDatabaseName(db_path)
 
         if not os.path.exists(db_path):
-            QMessageBox.critical(self, "Database Error", f"Database file '{db_path}' not found. Please ensure the file exists.")
-            sys.exit(1)  
+            if not db.open():
+                QMessageBox.critical(self, "Database Error", "Unable to open database")
+                return
+
+            query = QSqlQuery()
+            query.exec("""CREATE TABLE IF NOT EXISTS contacts (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            name TEXT,
+                            phone TEXT,
+                            email TEXT,
+                            address TEXT)""")
+            db.close()
         else:
             if not db.open():
                 QMessageBox.critical(self, "Database Error", "Unable to open database")
-                sys.exit(1)
-
+                return
+            
     def load_contacts(self):
         self.model = QSqlTableModel()
         self.model.setTable('contacts')
