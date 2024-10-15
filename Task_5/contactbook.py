@@ -13,7 +13,6 @@ class ContactDialog(QDialog):
         self.setWindowTitle(title)
         self.layout = QFormLayout()
 
-        # Input fields
         self.name_input = QLineEdit()
         self.phone_input = QLineEdit()
         self.email_input = QLineEdit()
