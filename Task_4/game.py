@@ -29,7 +29,6 @@ def play_game():
             print("Invalid choice. Please choose r, p, or s.")
             continue
 
-        # Map user input to full choice
         user_choice = {'r': 'rock', 'p': 'paper', 's': 'scissors'}[user_input]
         
         computer_choice = get_computer_choice()
@@ -38,7 +37,6 @@ def play_game():
         result = determine_winner(user_choice, computer_choice)
         print(result)
 
-        # Update scores
         if result == "You win!":
             user_score += 1
         elif result == "You lose!":
@@ -52,6 +50,5 @@ def play_game():
 
     print("Thanks for playing!")
 
-# Start the game
 if __name__ == "__main__":
     play_game()
