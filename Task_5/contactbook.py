@@ -1,10 +1,12 @@
 import sys
+import os
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout,
     QPushButton, QTableView, QLineEdit, QDialog,
     QFormLayout, QMessageBox
 )
 from PyQt6.QtSql import QSqlDatabase, QSqlTableModel, QSqlQuery
+from PyQt6.QtCore import Qt
 
 
 class ContactDialog(QDialog):                 
@@ -80,24 +82,22 @@ class ContactBook(QMainWindow):
         self.load_contacts()
 
     def connect_to_db(self):
+        db_path = 'contacts.db' 
         db = QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName('contacts.db')
+        db.setDatabaseName(db_path)
 
-        if not db.open():
-            QMessageBox.critical(self, "Database Error", "Unable to open database")
-            return
-
-        query = QSqlQuery()
-        query.exec("""CREATE TABLE IF NOT EXISTS contacts (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        name TEXT,
-                        phone TEXT,
-                        email TEXT,
-                        address TEXT)""")
+        if not os.path.exists(db_path):
+            QMessageBox.critical(self, "Database Error", f"Database file '{db_path}' not found. Please ensure the file exists.")
+            sys.exit(1)  
+        else:
+            if not db.open():
+                QMessageBox.critical(self, "Database Error", "Unable to open database")
+                sys.exit(1)
 
     def load_contacts(self):
         self.model = QSqlTableModel()
         self.model.setTable('contacts')
+        self.model.setSort(0, Qt.SortOrder.AscendingOrder)
         self.model.select()
         self.contact_table.setModel(self.model)
 
@@ -108,7 +108,20 @@ class ContactBook(QMainWindow):
             name, phone, email, address = dialog.get_contact()
 
             query = QSqlQuery()
-            query.prepare("INSERT INTO contacts (name, phone, email, address) VALUES (?, ?, ?, ?)")
+            query.exec("SELECT id FROM contacts ORDER BY id")
+            
+            used_ids = []
+            while query.next():
+                used_ids.append(query.value(0))
+            
+            new_id = 1
+            for i in range(1, len(used_ids) + 2):
+                if i not in used_ids:
+                    new_id = i
+                    break
+                
+            query.prepare("INSERT INTO contacts (id, name, phone, email, address) VALUES (?, ?, ?, ?, ?)")
+            query.addBindValue(new_id)
             query.addBindValue(name)
             query.addBindValue(phone)
             query.addBindValue(email)
