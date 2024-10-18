@@ -1,4 +1,3 @@
-
 import sys
 import os
 from PyQt6.QtWidgets import (
@@ -8,7 +7,6 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtSql import QSqlDatabase, QSqlTableModel, QSqlQuery
 from PyQt6.QtCore import Qt
-
 
 class ContactDialog(QDialog):                 
     def __init__(self, title="Add Contact", contact=None):
@@ -44,7 +42,6 @@ class ContactDialog(QDialog):
                 self.email_input.text(),
                 self.address_input.text())
 
-
 class ContactBook(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -69,15 +66,12 @@ class ContactBook(QMainWindow):
         self.add_button = QPushButton("Add Contact")
         self.update_button = QPushButton("Update Contact")
         self.delete_button = QPushButton("Delete Contact")
-
         self.layout.addWidget(self.add_button)
         self.layout.addWidget(self.update_button)
         self.layout.addWidget(self.delete_button)
-
         self.add_button.clicked.connect(self.add_contact)
         self.update_button.clicked.connect(self.update_contact)
         self.delete_button.clicked.connect(self.delete_contact)
-        
         self.search_bar.textChanged.connect(self.search_contacts)
 
         self.load_contacts()
@@ -193,7 +187,6 @@ class ContactBook(QMainWindow):
         search_text = self.search_bar.text()
         self.model.setFilter(f"name LIKE '%{search_text}%' OR phone LIKE '%{search_text}%'")
         self.model.select()
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
